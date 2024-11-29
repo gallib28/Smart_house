@@ -1,137 +1,156 @@
-מפת דרכים מפורטת לפרויקט הבית החכם
+# Smart Home Project
 
-מטרה
+This project aims to create a smart home system to control smart switches (for lights and a water heater) and view IP camera footage via a custom app. The system will be hosted on a Raspberry Pi (RPI) server, providing full control over all devices.
 
-לפתח מערכת חכמה המאפשרת שליטה על מתגים חכמים (לאורות ולדוד מים) וצפייה בצילומי מצלמות IP דרך אפליקציה מותאמת אישית. המערכת תתבסס על שרת Raspberry Pi (RPI) ותספק שליטה מלאה על המכשירים.
+---
 
-שלב 1: הגדרת תשתית החומרה
+## Project Roadmap
 
-משימות:
+### 1. **Hardware Setup**
+#### Tasks:
+1. **Purchase Required Equipment:**
+   - **Smart Switches:** Wi-Fi/RTSP-compatible switches (e.g., Shelly, Tuya, Sonoff).
+   - **IP Camera:** TP-Link Tapo C200 or any RTSP-supported model.
+   - **Raspberry Pi:** Version 4 recommended (minimum 4GB RAM).
+   - **Accessories:** Stable power supply, 32GB+ microSD card.
 
-	1.	רכישת ציוד:
-	•	מתגים חכמים תואמי Wi-Fi/RTSP (למשל: Shelly/Tuya/Sonoff).
-	•	מצלמת IP (למשל: TP-Link Tapo C200 או דגם אחר תואם RTSP).
-	•	Raspberry Pi (גרסה 4 מומלצת, עם לפחות 4GB RAM).
-	•	ספק כוח יציב ל-RPI.
-	•	כרטיס microSD בנפח 32GB ומעלה.
-	2.	חיבור המתגים והמצלמה:
-	•	חבר את המתגים ואת המצלמה לרשת ה-Wi-Fi.
-	•	בדוק שניתן לשלוט בהם באמצעות האפליקציה היצרנית (כשלב ראשוני).
-	3.	הגדרת RPI:
-	•	התקן מערכת הפעלה Raspbian Lite (ללא GUI).
-	•	הגדר חיבור רשת (Wi-Fi או כבל Ethernet).
-	•	ודא שה-RPI מוגדר עם IP סטטי.
+2. **Connect Devices:**
+   - Connect the switches and camera to the Wi-Fi network.
+   - Verify initial control via the manufacturer's app.
 
-יכולות טכנולוגיות נדרשות:
+3. **Configure Raspberry Pi:**
+   - Install Raspberry Pi OS Lite (headless version).
+   - Set up network connectivity (Wi-Fi or Ethernet).
+   - Configure static IP for the RPI.
 
-	•	ידע בסיסי ברשתות.
-	•	התקנה ראשונית של מערכת הפעלה ל-RPI.
+#### Skills Required:
+- Basic networking knowledge.
+- Initial OS setup on Raspberry Pi.
 
-שלב 2: הגדרת שרת על ה-RPI
+---
 
-משימות:
+### 2. **Raspberry Pi Server Setup**
+#### Tasks:
+1. **Install Required Software:**
+   - **MQTT Server:** Install Mosquitto for switch control.
+   - **Web Server:** Use Flask or Nginx for the API and app backend.
+   - **Camera Management:** Install MotionEyeOS or ZoneMinder for IP cameras.
 
-	1.	התקנת תוכנות נדרשות:
-	•	התקן שרת MQTT (למשל: Mosquitto) לשליטה במתגים.
-	•	התקן שרת Nginx (או Flask) לטובת ה-API והאפליקציה.
-	•	התקן את ספריית MotionEyeOS או ZoneMinder לניהול המצלמות.
-	2.	אינטגרציה עם המתגים:
-	•	חבר את המתגים לשרת MQTT.
-	•	כתוב סקריפט Python לשליחת פקודות MQTT למתגים (לדוגמה: הדלקת/כיבוי אור).
-	3.	אינטגרציה עם המצלמה:
-	•	משוך את זרם הווידאו (RTSP) מהמצלמה.
-	•	בדוק את השידור בעזרת VLC או ffmpeg.
+2. **Integrate with Smart Switches:**
+   - Connect the switches to the MQTT server.
+   - Write Python scripts to send MQTT commands (e.g., toggle lights).
 
-יכולות טכנולוגיות נדרשות:
+3. **Integrate with IP Camera:**
+   - Retrieve video stream via RTSP.
+   - Test the stream with tools like VLC or ffmpeg.
 
-	•	ידע בסיסי בפרוטוקול MQTT.
-	•	ניסיון בסיסי עם Python.
-	•	יכולת לעבוד עם פרוטוקולי וידאו (RTSP).
+#### Skills Required:
+- Basic knowledge of MQTT protocol.
+- Python programming basics.
+- Experience with RTSP protocols.
 
-שלב 3: פיתוח צד שרת (Backend)
+---
 
-משימות:
+### 3. **Backend Development**
+#### Tasks:
+1. **Build API:**
+   - Use Flask or FastAPI to create endpoints.
+   - Implement functions:
+     - Control switches via MQTT.
+     - Display camera video streams (RTSP).
 
-	1.	בניית API לשליטה על המתגים והמצלמות:
-	•	השתמש ב-Flask או FastAPI ליצירת API.
-	•	כתוב פונקציות:
-	•	להדלקת/כיבוי מתגים (דרך MQTT).
-	•	להצגת שידור וידאו מהמצלמה (RTSP).
-	2.	אינטגרציה עם בסיס נתונים:
-	•	התקן MySQL או SQLite על ה-RPI.
-	•	צור טבלה לניהול הגדרות (לדוגמה: מצב מתגים, זמני הפעלה).
-	3.	אבטחת API:
-	•	הוסף אימות JWT לטובת אבטחת הגישה.
+2. **Database Integration:**
+   - Install MySQL or SQLite on the RPI.
+   - Create a database table to store configurations (e.g., switch states, schedules).
 
-יכולות טכנולוגיות נדרשות:
+3. **Secure the API:**
+   - Add JWT-based authentication for secure access.
 
-	•	תכנות צד שרת ב-Python.
-	•	עבודה עם בסיסי נתונים (SQL).
-	•	אבטחת API באמצעות JWT.
+#### Skills Required:
+- Backend development with Python.
+- SQL database management.
+- API security best practices.
 
-שלב 4: פיתוח צד לקוח (Frontend)
+---
 
-משימות:
+### 4. **Frontend Development**
+#### Tasks:
+1. **Design the Application:**
+   - Create a login page.
+   - Design the main dashboard to display switch statuses and camera feeds.
 
-	1.	עיצוב האפליקציה:
-	•	עיצוב דף כניסה (Login).
-	•	עיצוב דף ראשי להצגת מצב מתגים ותצוגת מצלמות.
-	2.	כתיבת קוד:
-	•	השתמש ב-HTML, CSS, JavaScript.
-	•	השתמש ב-Framework כמו React או Vue.js לממשק מתקדם.
-	3.	אינטגרציה עם ה-API:
-	•	שליחת בקשות API לשליטה במתגים.
-	•	משיכת נתונים עבור תצוגת מצלמות.
+2. **Develop the Frontend:**
+   - Use HTML, CSS, and JavaScript.
+   - Optionally, use a framework like React or Vue.js for advanced UI.
 
-יכולות טכנולוגיות נדרשות:
+3. **Integrate with Backend:**
+   - Send API requests to control switches.
+   - Fetch data for camera feeds.
 
-	•	פיתוח צד לקוח עם React/Vue.js.
-	•	אינטגרציה של Frontend עם API.
+#### Skills Required:
+- Frontend development with HTML/CSS/JavaScript.
+- Integration of Frontend with API.
 
-שלב 5: בדיקות ושיפורים
+---
 
-משימות:
+### 5. **Testing and Improvements**
+#### Tasks:
+1. **System Testing:**
+   - Verify full control of switches via the app.
+   - Ensure smooth video streaming from the cameras.
 
-	1.	בדיקות מערכת:
-	•	בדוק שליטה מלאה על המתגים דרך האפליקציה.
-	•	ודא שהווידאו מהמצלמות זורם בצורה חלקה.
-	2.	תיקוני באגים ושיפורים:
-	•	פתר בעיות חיבור או עיכוב.
-	•	שפר את ביצועי המערכת (לדוגמה: שמירת cache לזרם וידאו).
-	3.	הוספת תכונות:
-	•	הוספת תזמונים אוטומטיים למתגים.
-	•	שליחת התראות (Notifications) לטלפון.
+2. **Bug Fixing and Optimization:**
+   - Resolve connectivity or latency issues.
+   - Optimize system performance (e.g., caching video streams).
 
-יכולות טכנולוגיות נדרשות:
+3. **Feature Enhancements:**
+   - Add task scheduling for switches.
+   - Send notifications (e.g., task reminders or motion alerts).
 
-	•	בדיקות תוכנה (QA).
-	•	יכולת לזהות ולפתור בעיות ביצועים.
+#### Skills Required:
+- Software testing and debugging.
+- Performance optimization.
 
-שלב 6: פריסה ושימוש יומיומי
+---
 
-משימות:
+### 6. **Deployment and Maintenance**
+#### Tasks:
+1. **Deployment:**
+   - Ensure RPI security (e.g., SSH-only access).
+   - Install a UPS to prevent power interruptions.
 
-	1.	העברת המערכת לסביבת ייצור:
-	•	ודא שה-RPI מוגן (גישה עם SSH בלבד).
-	•	התקן UPS למניעת הפסקות חשמל.
-	2.	שימוש ותחזוקה:
-	•	השתמש באפליקציה לניהול הבית.
-	•	עדכן את המערכת בהתאם לצרכים המשתנים.
+2. **Usage and Maintenance:**
+   - Use the app to manage devices.
+   - Update the system as needed.
 
-סיכום: טכנולוגיות וכלים נדרשים
+---
 
-	1.	תוכנות:
-	•	Raspberry Pi OS (Lite).
-	•	Flask/FastAPI.
-	•	MySQL.
-	•	MotionEyeOS או ZoneMinder.
-	•	MQTT (Mosquitto).
-	2.	שפות תכנות:
-	•	Python (ל-Backend).
-	•	JavaScript (ל-Frontend).
-	3.	חומרה:
-	•	Raspberry Pi.
-	•	מתגים חכמים.
-	•	מצלמת IP.
+## Technology and Tools
+1. **Software:**
+   - Raspberry Pi OS (Lite).
+   - Flask/FastAPI (Backend).
+   - MySQL/SQLite (Database).
+   - MotionEyeOS/ZoneMinder (Camera management).
+   - MQTT Broker (e.g., Mosquitto).
 
-אם תצטרך הסבר על שלב מסוים או דוגמה לקוד, אני כאן לעזור!
+2. **Programming Languages:**
+   - **Backend:** Python.
+   - **Frontend:** HTML, CSS, JavaScript.
+
+3. **Hardware:**
+   - Raspberry Pi 4.
+   - Smart switches.
+   - IP camera.
+
+---
+
+## Getting Started
+1. Set up the Raspberry Pi with Raspberry Pi OS.
+2. Install and configure MQTT and MotionEyeOS.
+3. Develop the backend API for controlling switches and cameras.
+4. Create the frontend app for user interaction.
+5. Test the system and deploy it for daily use.
+
+---
+
+If you have any questions or need further assistance with specific steps, feel free to ask!
